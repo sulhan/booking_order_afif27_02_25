@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_work_order">
+         <t t-call="report.external_layout">
+		  <t t-foreach="docs" t-as="work_order">
+            <div class="page">
+                <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
+                    <!-- Work Order Number -->
+                    <tr>
+                        <td colspan="4" style="border: 1px solid black; padding: 5px;">
+                            <strong><t t-esc="work_order.name"/></strong>
+                        </td>
+                    </tr>
+
+                    <!-- Header Baris 1 -->
+                    <tr>
+                        <td style="border: 1px solid black; padding: 5px;"><strong>Team Name</strong></td>
+                        <td style="border: 1px solid black; padding: 5px;"><t t-esc="work_order.team_id.name"/></td>
+                        <td style="border: 1px solid black; padding: 5px;"><strong>Customer</strong></td>
+                        <td style="border: 1px solid black; padding: 5px;"><t t-esc="work_order.booking_order_id.partner_id.name"/></td>
+                    </tr>
+
+                    <!-- Header Baris 2 -->
+                    <tr>
+                        <td style="border: 1px solid black; padding: 5px;"><strong>Booking Order Ref</strong></td>
+                        <td style="border: 1px solid black; padding: 5px;"><t t-esc="work_order.booking_order_id.name"/></td>
+                        <td style="border: 1px solid black; padding: 5px;"><strong>Date</strong></td>
+                        <td style="border: 1px solid black; padding: 5px;">
+                            <t t-esc="work_order.planned_start"/> - <t t-esc="work_order.planned_end"/>
+                        </td>
+                    </tr>
+
+                    <!-- Notes -->
+                    <tr>
+                        <td colspan="4" style="border: 1px solid black; padding: 5px;">
+                            <strong>NOTES:</strong> <br/>
+                            <t t-esc="work_order.notes"/>
+                        </td>
+                    </tr>
+
+                    <!-- Signature -->
+                    <tr>
+                        <td colspan="4" style="border: 1px solid black; padding: 5px;"><strong>Signature:</strong></td>
+                    </tr>
+                </table>
+            </div>
+        </t>
+		  </t>
+    </template>
+</odoo>

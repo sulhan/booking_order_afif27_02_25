@@ -1,0 +1,136 @@
+<odoo> 
+<!-- Action untuk Booking Order (menggunakan Sale Order) -->
+    <record id="action_sale_order1" model="ir.actions.act_window">
+        <field name="name">Booking Orders</field>
+        <field name="res_model">booking.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Action untuk Work Order -->
+    <record id="action_work_order" model="ir.actions.act_window">
+        <field name="name">Work Orders</field>
+        <field name="res_model">work.order</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Action untuk Service Team -->
+    <record id="action_service_team" model="ir.actions.act_window">
+        <field name="name">Service Teams</field>
+        <field name="res_model">service.team</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+	
+	
+	  <!-- LIST VIEW -->
+    <record id="view_work_order_tree" model="ir.ui.view">
+        <field name="name">work.order.tree.view</field>
+        <field name="model">work.order</field>
+        <field name="arch" type="xml">
+            <tree string="Work Orders">
+                <field name="name"/>
+                <field name="team_id"/>
+                <field name="team_leader"/>
+                <field name="planned_start"/>
+                <field name="planned_end"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- KANBAN VIEW -->
+    <record id="view_work_order_kanban" model="ir.ui.view">
+        <field name="name">work.order.kanban.view</field>
+        <field name="model">work.order</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <field name="name"/>
+                <field name="team_id"/>
+                <field name="planned_start"/>
+                <field name="planned_end"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div>
+                                <span>Team: <field name="team_id"/></span><br/>
+                                <span>Start: <field name="planned_start"/></span><br/>
+                                <span>End: <field name="planned_end"/></span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- CALENDAR VIEW -->
+    <record id="view_work_order_calendar" model="ir.ui.view">
+        <field name="name">work.order.calendar.view</field>
+        <field name="model">work.order</field>
+        <field name="arch" type="xml">
+            <calendar string="Work Orders" date_start="planned_start" date_stop="planned_end">
+                <field name="name"/>
+                <field name="team_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- PIVOT VIEW -->
+    <record id="view_work_order_pivot" model="ir.ui.view">
+        <field name="name">work.order.pivot.view</field>
+        <field name="model">work.order</field>
+        <field name="arch" type="xml">
+            <pivot string="Work Orders">
+                <field name="state"/>
+                <field name="team_id"/>
+                <field name="planned_start" type="row"/>
+                <field name="planned_end" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- GRAPH VIEW -->
+    <record id="view_work_order_graph" model="ir.ui.view">
+        <field name="name">work.order.graph.view</field>
+        <field name="model">work.order</field>
+        <field name="arch" type="xml">
+            <graph string="Work Orders">
+                <field name="state" type="row"/>
+                <field name="team_id" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_work_order_graph" model="ir.actions.act_window">
+        <field name="name">Work Orders</field>
+        <field name="res_model">work.order</field>
+        <field name="view_mode">tree,form,kanban,calendar,pivot,graph</field>
+    </record>
+
+  
+	
+	
+	
+	
+	
+	
+	
+    <!-- Menu Utama Booking di bawah Sales -->
+    <menuitem id="menu_booking" name="Booking" parent="sales_team.menu_sales" sequence="10"/>
+
+    <!-- Submenu Booking Order -->
+    <menuitem id="menu_booking_order" name="Booking Order" parent="menu_booking" action="action_sale_order1"/>
+
+    <!-- Submenu Work Order -->
+    <menuitem id="menu_work_order" name="Work Order" parent="menu_booking" action="action_work_order"/>
+	
+	  <!-- MENU -->
+    <menuitem id="menu_work_order" name="Work Orders" parent="menu_booking" action="action_work_order_graph"/>
+
+    <!-- Submenu Service Team -->
+    <menuitem id="menu_service_team" name="Service Team" parent="menu_booking" action="action_service_team"/>
+
+   
+</odoo>

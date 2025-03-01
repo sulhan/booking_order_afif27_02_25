@@ -1,0 +1,45 @@
+<odoo>
+    <!-- FORM VIEW -->
+    <record id="view_work_order_form" model="ir.ui.view">
+        <field name="name">work.order.form</field>
+        <field name="model">work.order</field>
+        <field name="arch" type="xml">
+            <form string="Work Order">
+                <header>
+                    <button name="action_start_work_order" type="object" string="Start" states="pending" class="oe_highlight"/>
+                    <button name="action_end_work_order" type="object" string="Complete" states="in_progress" class="btn-primary"/>
+                     <button name="action_reset_work_order" type="object" string="Reset" class="btn-warning"
+                        attrs="{'invisible': [('state', '!=', 'in_progress')]}"/>
+					<button name="action_cancel_work_order" type="object" string="Cancel" states="pending,in_progress" class="btn-danger"/>
+                    <field name="state" widget="statusbar" statusbar_visible="pending,in_progress,done,cancelled"/>
+ 
+				</header>
+				<header>
+                   
+	<button name="%(booking_order_afif27_02_25.action_report_work_order)d"
+    string="Print Work Order"
+    type="action"
+    class="btn btn-primary"/>
+
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="booking_order_id"/>
+                        <field name="team_id"/>
+                        <field name="team_leader"/>
+                        <field name="team_members"/>
+                        <field name="planned_start"/>
+                        <field name="planned_end"/>
+                        <field name="date_start" readonly="1"/>
+                        <field name="date_end" readonly="1"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+	
+
+  
+</odoo>
